@@ -43,4 +43,4 @@ BEGIN
 	END etiqueta;
 END$$
 
-CALL BuscarRecetaPorNombreSS("Toritas de papa");
+CALL BuscarRecetaPorNombreSS("Tortitas de papa");
