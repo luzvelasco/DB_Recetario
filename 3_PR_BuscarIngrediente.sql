@@ -10,7 +10,7 @@ DELIMITER $$
 
 CREATE PROCEDURE BuscarRecetaPorIngrediente(
 	IN
-    ingredientesBuscar TEXT
+    listaIngredientes TEXT
     #ingredienteBuscar CHAR(30)
     )
     
@@ -28,21 +28,13 @@ BEGIN
         RecetaIngredientes.detalles -- opcional
     FROM Recetas
     
-    JOIN
-		RecetaIngredientes
-	ON Recetas.idReceta = RecetaIngredientes.idReceta
-    JOIN
-		Ingredientes
-	ON RecetaIngredientes.idIngrediente = Ingredientes.idIngrediente
-    JOIN
-		tipoReceta
-	ON Recetas.idTipo = tipoReceta.idTR
-    JOIN
-		tipoIngrediente
-	ON Ingredientes.idTipo = tipoIngrediente.idTI
+    JOIN RecetaIngredientes USING (idReceta)
+    JOIN Ingredientes USING (idIngrediente)
+    JOIN tipoReceta USING (idTR)
+    JOIN tipoIngrediente USING (idTI)
     
     #WHERE Ingredientes.nombreIngrediente = ingredienteBuscar;
-    WHERE FIND_IN_SET(Ingredientes.nombreIngrediente, ingredientesBuscar) > 0;
+    WHERE FIND_IN_SET(Ingredientes.nombreIngrediente, listaIngredientes) > 0;
     
 END$$
 

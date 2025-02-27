@@ -1,22 +1,20 @@
-# Este archivo crea un procedimiento que busca las recetas que coinciden con 
-# los ingredientes seleccionados en los parametros sin que se repitan
+# Este archivo crea un procedimiento que busca las recetas que 
+# no contienen los ingredientes seleccionados en los parametros
 
 USE Recetario;
-DROP PROCEDURE IF EXISTS BuscarPorIngredienteNR;
+DROP PROCEDURE IF EXISTS BuscarSinIngrediente;
 
 DELIMITER $$
-CREATE PROCEDURE BuscarPorIngredienteNR(
+CREATE PROCEDURE BuscarSinIngrediente(
 	IN
     listaIngredientes TEXT
     )
-    
 BEGIN
     # checa la longitud de la lista de ingredientes en los parametros
     DECLARE contadorIngredientes INT;
     SET contadorIngredientes = (LENGTH(listaIngredientes) - LENGTH(REPLACE(listaIngredientes, ',', '')) + 1);
-
+    
 	SELECT DISTINCT
-		Recetas.idReceta,
         Recetas.nombreReceta AS Receta,
         tipoReceta.nombreTR AS Categoria,
         Recetas.rendimiento AS Rendimiento,
@@ -29,18 +27,17 @@ BEGIN
     
     JOIN RecetaIngredientes USING (idReceta)
     JOIN Ingredientes USING (idIngrediente)
-    JOIN tipoReceta USING(idTR)
+    JOIN tipoReceta USING (idTR)
+    JOIN tipoIngrediente USING (idTI)
     
-    WHERE
-		(FIND_IN_SET(Ingredientes.nombreIngrediente, listaIngredientes) > 0)
-    GROUP BY
-		Recetas.idReceta
+    WHERE idReceta NOT IN (
+	SELECT idReceta FROM VistaRecetaSimple
+	WHERE FIND_IN_SET(receta, listaIngredientes) > 0
+	GROUP BY idReceta
     HAVING
-		COUNT(DISTINCT Ingredientes.idIngrediente) = contadorIngredientes
-	;
+		COUNT(DISTINCT receta) = contadorIngredientes);
+
 END$$
 
-CALL BuscarPorIngredienteNR('Aceite,Sal,Agua');
-CALL BuscarPorIngredienteNR('Sal,Agua');
+CALL BuscarSinIngrediente("aceite")
 
-	

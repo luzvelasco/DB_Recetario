@@ -20,7 +20,7 @@ INSERT INTO tipoIngrediente(nombreTI) VALUES
     ("Origen animal"), -- 8
     ("Leguminosas"); -- 9
     
-INSERT INTO Ingredientes(nombreIngrediente, idTipo) VALUES
+INSERT INTO Ingredientes(nombreIngrediente, idTI) VALUES
 	(("jamón"), (1)),
 	(("azúcar"), (2)),
 	(("chile en polvo"), (2)),
@@ -83,7 +83,7 @@ INSERT INTO Ingredientes(nombreIngrediente, idTipo) VALUES
 	(("frijoles negros"), (9)),
 	(("nueces pecanas"), (9));
     
-INSERT INTO Recetas(nombreReceta, idTipo, rendimiento, instrucciones, foto) VALUES
+INSERT INTO Recetas(nombreReceta, idTR, rendimiento, instrucciones, foto) VALUES
 	("Sopa de chaya", 4, "4 porciones", 
     "1. Caliente el aceite en una cacerola y sofría las hojas de chaya. 
 	2. Añada el caldo de pollo, las rebanadas de papa, y sazone con sal y pimienta de Tabasco; hierva a fuego medio por 8 minutos y retire del fuego. 

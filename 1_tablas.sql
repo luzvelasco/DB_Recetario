@@ -20,13 +20,13 @@ DROP TABLE IF EXISTS Recetas;
 CREATE TABLE Recetas(
 	idReceta INT NOT NULL AUTO_INCREMENT,
     nombreReceta CHAR(70),
-    idTipo INT,
+    idTR INT,
     rendimiento CHAR(20),
     instrucciones TEXT, #65,535 (216 - 1) characters
     foto LONGBLOB, #4,254,567,295 (252 -1)
     PRIMARY KEY (idReceta),
     CONSTRAINT fkTipoReceta
-	FOREIGN KEY (idTipo)
+	FOREIGN KEY (idTR)
 		REFERENCES tipoReceta(idTR)
         ON DELETE SET NULL
         ON UPDATE CASCADE    
@@ -36,10 +36,10 @@ DROP TABLE IF EXISTS Ingredientes;
 CREATE TABLE Ingredientes(
 	idIngrediente INT NOT NULL AUTO_INCREMENT,
     nombreIngrediente CHAR(30),
-    idTipo INT,
+    idTI INT,
     PRIMARY KEY (idIngrediente),
 	CONSTRAINT fkTipoIngrediente
-    FOREIGN KEY (idTipo)
+    FOREIGN KEY (idTI)
 		REFERENCES tipoIngrediente(idTI)
         ON DELETE SET NULL
         ON UPDATE CASCADE

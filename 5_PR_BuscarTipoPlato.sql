@@ -24,21 +24,15 @@ BEGIN
         LEAVE etiqueta;
 	END IF;
     
-
-    
     SELECT nombreReceta as "Receta", rendimiento as "Rendimiento", instrucciones as "Instrucciones"
     ,(SELECT GROUP_CONCAT(nombreIngrediente SEPARATOR '
-')
-	 FROM ingredientes, recetaingredientes
-	 where ingredientes.idIngrediente = recetaingredientes.idIngrediente
-	 and recetaingredientes.idReceta = recetas.idReceta) as "Ingredientes" 
+')	 FROM ingredientes join recetaingredientes using(idIngrediente)
+     where recetaingredientes.idReceta = recetas.idReceta) as "Ingredientes" 
      , foto "Foto"
     
     FROM recetas 
-    where idTipo = tipoID;
+    where idTR = tipoID;
     
-
-
 	END etiqueta;
 END$$
 

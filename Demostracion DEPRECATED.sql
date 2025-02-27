@@ -2,8 +2,7 @@ USE Recetario;
 
 -- Menu de las Recetas
 SELECT nombreTR as "Tipo", nombreReceta AS "Platillo", rendimiento AS "Rendimiento", Foto
-FROM recetas, tiporeceta
-WHERE idTR = idTipo;
+FROM recetas join tiporeceta using(idTR);
 
 -- Categorias
 SELECT nombreTR AS "Tipo de receta" FROM tiporeceta;
@@ -16,11 +15,12 @@ CALL BuscarRecetaPorNombreSS("Quesadillas de comal y quesadillas fritas");
 CALL BuscarRecetaPorNombre("Quesadillas de comal y quesadillas fritas");
 
 
--- Busqueda por ingredientes
-CALL BuscarRecetaPorIngrediente('Sal,Agua');
+-- Busqueda por ingredientes, AND
+CALL BuscarPorIngrediente('Aceite,Sal,Agua');
 
--- Busqueda por ingredientes sin que se repitan
-CALL BuscarRecetaPorIngredienteNR('Aceite,Sal,Agua');
+
+-- Busqueda por ingredientes
+CALL BuscarPorIngredienteEXCL('Sal,Agua');
 
 
 -- Busqueda por tipo de plato

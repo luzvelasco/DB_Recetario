@@ -15,7 +15,7 @@ BEGIN
 		Recetas.rendimiento,
         Recetas.instrucciones
     FROM Recetas
-    JOIN tipoReceta ON Recetas.idTipo = tipoReceta.idTR
+    JOIN tipoReceta USING(idTR)
     WHERE Recetas.instrucciones LIKE CONCAT('%', instruccionClave, '%');
 END$$
 
